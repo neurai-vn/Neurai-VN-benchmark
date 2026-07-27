@@ -1,0 +1,264 @@
+{
+    "DB_NAME": "neuraivn",
+    "DIR_RAW": "", 
+    "DIR_PROCESSED": "",
+    "DIR_RESULTS_ML_BASELINE": "",
+    "IDENTIFIER": "public_id",
+    "FILES": {
+        "activeZoneMinutes.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "AZMTS": {
+                    "channels": ["azmts"],
+                    "description": null 
+                }
+            }
+        },
+        "ats.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "ATS": {
+                    "channels": ["ats_full", "ats_c", "ats_d", "ats_s", "ats_ms", "ats_mla", "ats_mfa", "ats_mva"],
+                    "description": null 
+                }
+            }
+        },
+        "hrts.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "HRTS": {
+                    "channels": ["hrts"],
+                    "description": null 
+                }
+            }
+        },
+        "accelerometer.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "ACC": {
+                    "channels": ["accel_x", "accel_y", "accel_z"],
+                    "description": "Batch-based accelerometer data (5s windows)"
+                }
+            }
+        },
+        "gyroscope.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "GYRO": {
+                    "channels": ["gyro_x", "gyro_y", "gyro_z"],
+                    "description": "Batch-based gyroscope data (5s windows)"
+                }
+            }
+        },
+        "battery.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "BATTERY": {
+                    "channels": ["level", "state"],
+                    "description": "Batch-based battery data (5s windows)" 
+                }
+            }
+        },
+        "network.csv": {
+            "info": {
+                "sampling": "periodic",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "NETWORK": {
+                    "channels": ["type", "isConnected", "isInternetReachable"],
+                    "description": "Batch-based network data (5s windows)"
+                }
+            }
+        },
+        "appstate.csv": {
+            "info": {
+                "sampling": "event",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "APPSTATE": {
+                    "channels": ["appstate"],
+                    "description": null 
+                }
+            }
+        },
+        "breathingRate.csv": {
+            "info": {
+                "sampling": "daily-passive",
+                "identifier": "public_id",
+                "ts_col": "date",
+                "ts_unit": null,
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "BREATHINGRATE": {
+                    "channels": ["breathing_rate"],
+                    "description": null 
+                }
+            }
+        },
+        "hrv.csv": {
+            "info": {
+                "sampling": "daily-passive",
+                "identifier": "public_id",
+                "ts_col": "date",
+                "ts_unit": null,
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "HRV": {
+                    "channels": ["dailyRmssd", "deepRmssd"],
+                    "description": null 
+                }
+            }
+        },
+        "spo2.csv": {
+            "info": {
+                "sampling": "daily-passive",
+                "identifier": "public_id",
+                "ts_col": "date",
+                "ts_unit": null,
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "SPO2": {
+                    "channels": ["min_spo2", "avg_spo2", "max_spo2"],
+                    "description": null 
+                }
+            }
+        },
+        "skinTemp.csv": {
+            "info": {
+                "sampling": "daily-passive",
+                "identifier": "public_id",
+                "ts_col": "date",
+                "ts_unit": null,
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "SKINTEMP": {
+                    "channels": ["nightlyRelative"],
+                    "description": null 
+                }
+            }
+        },
+        "sleep.csv": {
+            "info": {
+                "sampling": "daily-passive",
+                "identifier": "public_id",
+                "ts_col": "date",
+                "ts_unit": null,
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "SLEEP": {
+                    "channels": ["total_minutes_asleep", "total_time_in_bed", "total_minutes_deep", "total_minutes_light","total_minutes_rem", "total_minutes_wake"],
+                    "description": null 
+                }
+            }
+        },
+        "dailySurvey.csv": {
+            "info": {
+                "sampling": "daily-active",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "DAILYSURVEY": {
+                    "channels": ["gad2_score", "phq2_score"],
+                    "description": null 
+                }
+            }
+        },
+        "moodLog.csv": {
+            "info": {
+                "sampling": "daily-active",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "MOODLOG": {
+                    "channels": ["miserypleasure", "sleepinessarousal"],
+                    "description": null 
+                }
+            }
+        },
+        "gad7.csv": {
+            "info": {
+                "sampling": "weekly-active",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "GAD7": {
+                    "channels": ["gad7_score"],
+                    "description": null 
+                }
+            }
+        },
+        "phq9.csv": {
+            "info": {
+                "sampling": "weekly-active",
+                "identifier": "public_id",
+                "ts_col": "timestamp",
+                "ts_unit": "s",
+                "timezone": "Asia/Ho_Chi_Minh"
+            },
+            "modality": {
+                "PHQ9": {
+                    "channels": ["phq9_score"],
+                    "description": null 
+                }
+            }
+        }
+    }
+}
