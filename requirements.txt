@@ -3,3 +3,6 @@ cloudpickle
 pandas
 scikit-learn
 xgboost
+numpy
+matplotlib
+seaborn
