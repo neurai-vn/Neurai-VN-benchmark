@@ -1,12 +1,9 @@
 """
-Script to handle and prepare datasets: kang23 (K-EmoPhone) and gashi24 (PwMS)
+Main Script
 
 #######################
 Authors: Cuong Pham
 Email: cuongquocpham151@gmail.com
-
-## "DIR_PROCESSED": "/home/cuongpq/phd/REPO/digipheno-multimodal-SSL/assets/data-storage/kang23",
-## "DIR_PROCESSED": "/home/cuongpq/phd/REPO/digipheno-multimodal-SSL/assets/data-storage/gashi24",
 """
 from typing import Optional
 import os
@@ -28,7 +25,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 ##########################
 parser = argparse.ArgumentParser()
 parser.add_argument('--db', type=str, default='gashi24', 
-    help='name of dataset, either "gashi24" or "kang23" or "neuraivn"',
+    help='name of dataset, e.g., "neuraivn"',
 )
 parser.add_argument('--mode', type=str, default='info', 
     help='running mode, either "check" or "process"',
@@ -164,11 +161,6 @@ def main(args):
         # label
         FUNC[f_name].process_label(**CF)
 
-        # # select subjects based on criteria of the target severity group (in this case, based on PHQ)
-        # prioritized_pcode = kang23_label.group_sb_by_threshold(df, threshold=10)
-
-
-
     ##===============================##
     elif args.mode == "split":
 
@@ -235,44 +227,6 @@ def main(args):
         print(f">>> Saved: {path_save_dev}")
         print(f">>> Saved: {path_save_test}")
 
-        # # =====================================================
-        # # DL split
-        # # =====================================================
-        # dl_split = utils_data.build_dl_split(
-        #     dev_subjects=dev_subjects,
-        #     config=CF_GLOBAL,
-        # )
-        # dl_split["test"] = test_subjects
-        # utils_data.save_dl_split(
-        #     split=dl_split,
-        #     dataset_dir=CF["DIR_PROCESSED"],
-        #     config=CF_GLOBAL,
-        # )
-
-        # # =====================================================
-        # # Summary
-        # # =====================================================
-        # print("\n===== DEEP LEARNING SPLIT =====")
-        # print(f"train = {len(dl_split['train'])}")
-        # print(f"val   = {len(dl_split['val'])}")
-        # print(f"test  = {len(dl_split['test'])}")
-
-        # for taskDL in [
-        #     "pretrain",
-        #     "linearprobe",
-        #     "finetune",
-        # ]:
-
-        #     splits = utils_data.get_split_for_task(
-        #         dataset_dir=CF["DIR_PROCESSED"],
-        #         config=CF_GLOBAL,
-        #         taskDL=taskDL,
-        #     )
-        #     print(f"\n[{taskDL}]")
-        #     for split_name, split_subjects in splits.items():
-        #         if split_subjects is None or split_name not in ["train", "val", "test"]:
-        #             continue
-        #         print(f"{split_name:<6} -> {len(split_subjects)} subjects")
 
 
     ##===============================##
@@ -356,9 +310,6 @@ def main(args):
     ##===============================##
     else:
         raise NotImplementedError(f'{args.mode} not implemented')
-
-
-
 
 
 

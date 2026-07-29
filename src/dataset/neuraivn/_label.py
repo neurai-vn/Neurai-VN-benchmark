@@ -3,7 +3,9 @@ import os
 from src.utils import utils_data
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def get_user_info(**kwargs) -> None:
     """get user information from the original demographic file."""
 
@@ -12,10 +14,9 @@ def get_user_info(**kwargs) -> None:
     print("\n>>> Check folder:\n", d_len_size)
     
 
-
-
-
-################################
+#===========================#
+# Function 
+#===========================#
 def process_label(**kwargs) -> None:
     """
     Extract label
@@ -26,7 +27,9 @@ def process_label(**kwargs) -> None:
 
 
 
-################################
+#===========================#
+# Function 
+#===========================#
 class USER_INFO:
     def __init__(self, **kwargs) -> None:
         self.kwargs = kwargs

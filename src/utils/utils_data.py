@@ -192,3 +192,51 @@ def get_all_stream_name(**kwargs):
         if mod is not None:
             streams += list(mod.keys())
     return streams
+
+
+
+
+#===========================#
+# Function 
+#===========================#
+def get_available_dates(subject, d_path, **kwargs) -> pd.DataFrame:
+    """
+    Additional processing specific to neuraivn dataset.
+    - Drop rows with NaN in 'HRTS', 'APPSTATE' columns
+    """
+    # list_stream_to_filter = ['HRTS', 'APPSTATE']
+    list_stream_to_filter = ['HRTS']
+    available_dates = []
+    if len(list_stream_to_filter) > 1:
+        for stream in list_stream_to_filter:
+            fn, config = utils_data.stream_to_fn(stream, **kwargs)
+            # Load data for each stream
+            df_stream = _load_data(fn, subject, d_path, **kwargs)
+
+            # calculate mean value for each day by aggregating value within the date
+            df_stream_agg = df_stream.groupby(df_stream.index.get_level_values('timestamp').date).mean()
+            # get days that not NaN
+            available_date = pd.unique(df_stream_agg.dropna().index)
+
+            available_dates.append(available_date)
+
+        available_dates_hrts, available_dates_appstate = available_dates
+        available_dates = np.intersect1d(available_dates_hrts, available_dates_appstate)
+        # print(f">>> Available dates in HRTS: {available_dates_hrts}")
+        # print(f">>> Available dates in APPSTATE: {available_dates_appstate}")
+        # print(f">>> Intersected dates: {available_dates}")
+    
+    else:
+        stream = list_stream_to_filter[0]
+        fn, config = utils_data.stream_to_fn(stream, **kwargs)
+        df_stream = _load_data(fn, subject, d_path, **kwargs)
+
+
+        # calculate mean value for each day by aggregating value within the date
+        df_stream_agg = df_stream.groupby(df_stream.index.get_level_values('timestamp').date).mean()
+        # get days that not NaN
+        available_dates = pd.unique(df_stream_agg.dropna().index)
+
+    logger.info(f">>> [{subject}] Available dates in {stream}: {available_dates}")
+
+    return available_dates

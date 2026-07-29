@@ -7,17 +7,16 @@ This repository provides the preprocessing pipeline, handcrafted feature extract
 ## Citation
 
 If you use this repository in your research, please cite our paper:
-
 ```bibtex
-@article{your_arxiv_key,
-  title   = {Paper Title},
-  author  = {Author et al.},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+@article{,
+  title   = {Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification},
+  author  = {Quoc-Cuong Pham, Hoang-Thuy-Duong Vu, Thi-Thanh-Huong Ha, Huy-Hieu Pham},
+  journal = {arXiv preprint arXiv:2607.25232},
   year    = {2026}
 }
 ```
 
-Preprint: https://arxiv.org/abs/XXXX.XXXXX
+Preprint: https://arxiv.org/pdf/2607.25232
 
 ## Requirements
 - Python 3.10
@@ -30,7 +29,6 @@ pip install -r requirements.txt
 ## Configuration
 
 Before running the pipeline, configure the dataset paths in:
-
 ```text
 src/configs/neuraivn.json
 ```

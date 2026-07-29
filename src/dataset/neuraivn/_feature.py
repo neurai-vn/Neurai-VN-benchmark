@@ -15,9 +15,9 @@ warnings.filterwarnings("ignore")
 logger = get_logger(__name__)
 
 
-################## UTILS #################
-##########################################
-##########################
+#===========================#
+# Function 
+#===========================#
 def reform_dataframe(df: pd.DataFrame):
     """
     Reset multi-Index, back to the dataframe with multiple columns.
@@ -27,7 +27,9 @@ def reform_dataframe(df: pd.DataFrame):
         date=lambda x: x["timestamp"].dt.date.astype(str)
     )
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def calc_stats(
     df: pd.DataFrame, 
     col:str
@@ -45,8 +47,9 @@ def calc_stats(
             .reset_index()
 
 
-
-##########################
+#===========================#
+# Function 
+#===========================#
 def get_feature_by_day(
     stream: str,
     df: pd.DataFrame,
@@ -74,8 +77,8 @@ def get_feature_by_day(
     
     ##
     if verbose:
-        print(f"\n\n======[VERBOSE] get_feature_by_day() =======")
-        print(f">>> stream: {stream} | df_feature.shape: {df_feature.shape} | df_feature.columns: {df_feature.columns.tolist()}")
+        logger.info(f"\n\n======[VERBOSE] get_feature_by_day() =======")
+        logger.info(f">>> stream: {stream} | df_feature.shape: {df_feature.shape} | df_feature.columns: {df_feature.columns.tolist()}")
 
 
     ## 
@@ -83,11 +86,12 @@ def get_feature_by_day(
 
 
 
-##########################
-## APPSTATE
+#===========================#
+# Function 
+#===========================#
 def _feature_appstate(df:pd.DataFrame, **kwargs):
     """ 
-    Compute the total number of locks/unlocks...during the day [Gashi24]
+    Compute the total number of locks/unlocks...during the day
     Calculate (for each day) the total number of Locks & Unlocks
     """
     col = 'appstate'
@@ -104,8 +108,9 @@ def _feature_appstate(df:pd.DataFrame, **kwargs):
                     .rename(columns={0 : 'feature'})
 
 
-##########################
-## HRTS
+#===========================#
+# Function 
+#===========================#
 def _feature_hrts(df:pd.DataFrame, **kwargs):
     """ 
     Function to get feature HEART RATE TIME SERIES
@@ -116,7 +121,10 @@ def _feature_hrts(df:pd.DataFrame, **kwargs):
     return calc_stats(df.loc[df[col] != 0], col) \
             .rename(columns={col : 'feature'})
 
-## ATS
+
+#===========================#
+# Function 
+#===========================#
 def _feature_azmts(df:pd.DataFrame, **kwargs):
     """ 
     Function to get feature ACTIVITY ZONE MINUTE TIME SERIES
@@ -128,7 +136,9 @@ def _feature_azmts(df:pd.DataFrame, **kwargs):
             .rename(columns={col : 'feature'})
 
 
-## ATS
+#===========================#
+# Function 
+#===========================#
 def _feature_common(df:pd.DataFrame, **kwargs):
     """ 
     Function to get feature ATS / ACC / GYRO
@@ -150,7 +160,9 @@ def _feature_common(df:pd.DataFrame, **kwargs):
         .reset_index(name="feature")
     )
 
-
+#===========================#
+# Function 
+#===========================#
 def _feature_summaries(df:pd.DataFrame, **kwargs):
     """ 
     Function to get feature SLEEP / BREATHINGRATE / HRV / SKINTEMP / SPO2
@@ -178,7 +190,9 @@ def _feature_summaries(df:pd.DataFrame, **kwargs):
             .reset_index(name="feature")
         )
 
-
+#===========================#
+# Function 
+#===========================#
 def _feature_dailysurvey(df:pd.DataFrame, **kwargs):
     """ 
     Function to get feature:
@@ -204,10 +218,15 @@ def _feature_dailysurvey(df:pd.DataFrame, **kwargs):
         .reset_index(name="feature")
     )
 
+
+#===========================#
+# Function 
+#===========================#
 def _feature_moodlog(df:pd.DataFrame, max_score:int=6, **kwargs):
     """ 
     Function to get feature:
-        MOODLOG (miserypleasure, sleepinessarousal), each score range -2->2 (so we should normalize to 0-1 by adding 2 and divide to 4)
+        MOODLOG (miserypleasure, sleepinessarousal), each score range -2->2.
+        so we normalize to 0-1 by adding 2 and divide to 4)
     Note that, this feature has several columns, and each day user can log 2-3 entries 
     We will select only the last entry of the day and normalize
     """
@@ -230,17 +249,10 @@ def _feature_moodlog(df:pd.DataFrame, max_score:int=6, **kwargs):
     )
 
 
-
-
-
-
-
-
-############## FUNCTION FEATURE MAPPING #################
-########################################################
+#===========================#
+# Function 
+#===========================#
 FUNC_FEATURE = {
-
-
     ## Pc (phone-continuous)
     'ACC': _feature_common,
     'GYRO': _feature_common,
@@ -274,14 +286,9 @@ FUNC_FEATURE = {
 
 
 
-
-
-
-
-
-
-############## RUN FEATURE EXTRACTION #################
-########################################################
+#===========================#
+# FEATURE EXTRACTION 
+#===========================#
 def _process(
     stream: str,
     subject: str,
@@ -324,9 +331,9 @@ def _process(
 
 
 
-
-############### RUN FEATURE EXTRACTION ########
-################################################################
+#===========================#
+# FEATURE EXTRACTION
+#===========================#
 def run_process_feature(
     subject: str, 
     d_path: Dict,

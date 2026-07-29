@@ -20,7 +20,9 @@ logger = get_logger(__name__)
 IDENTIFIER = "public_id"
 COLUMN_LABEL = "label"
 
-
+#===========================#
+# Function 
+#===========================#
 class Baselineneuraivn:
     def __init__(
         self, 
@@ -31,7 +33,12 @@ class Baselineneuraivn:
         self.kwargs = kwargs
         self.list_streams = list_streams
         self.verbose = verbose
-        self.modeling_tasks = ['4class', 'hc-clinical', 'hc-dep', 'hc-anx', 'dep-anx']
+        self.modeling_tasks = [
+            'hc-clinical', 
+            'hc-dep', 
+            'hc-anx', 
+            'dep-anx'
+        ]
         self.d_group_features = {
             "Wm": [
                 "ATS", 
@@ -195,7 +202,8 @@ class Baselineneuraivn:
         concatenate all features, dropNa
 
         So we use AZMTS, ATS, HRTS, APPSTATE sensor.
-        The raw sensor of APPSTATE may have additional day, but we will omit it, only cover those data within the start-end of HRTS
+        The raw sensor of APPSTATE may have additional day, 
+        but we will omit it, only cover those data within the start-end of HRTS
 
         """
         # concat
@@ -204,15 +212,6 @@ class Baselineneuraivn:
             # if stream.startswith('feature'):
             df.append(v)
         df = pd.concat(df, axis=1)
-
-        # print("\n>>> CONCAT ALL FEATURE FILE (.pkl):\n", df)
-        # print("\n>>> df shape:\n", df.shape)
-
-        # # drop row where have nan in the index name
-        # df = df.drop([i for i in df.index \
-        #                 if 'NaN' in i or 'NaT' in i])  
-        # # drop row where >50% #column is missing.
-        # df = df.dropna(thresh=int(0.8*len(df.columns)))
 
         # Extract date part from the index and convert to datetime
         df[IDENTIFIER] = df.index.str.split('_').str[0]
@@ -259,9 +258,11 @@ class Baselineneuraivn:
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def run_ml( 
-    task: str = "4class",
+    task: str = "hc-dep",
     list_streams: List[str] = None,
     path_save: str = f"./assets/results/benchmarkML/baseline_neuraivn",
     pipeline_type: str = "kfold",

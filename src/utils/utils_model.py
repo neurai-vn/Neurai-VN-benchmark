@@ -26,7 +26,9 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 GLOBAL_SEEDS = 42
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def preprocess_feature(x: np.array):
     """
     preprocess the feature with imputation and scaling. 
@@ -44,7 +46,9 @@ def preprocess_feature(x: np.array):
     return x, imputer, scaler
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def _get_model(model_type:str):
     """
     get ML models
@@ -58,7 +62,9 @@ def _get_model(model_type:str):
     
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def _get_score(model_type, y_test, y_pred):
     """
     get prediction scores
@@ -75,7 +81,9 @@ def _get_score(model_type, y_test, y_pred):
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def pipeline_heldout(
     x_train, 
     y_train,
@@ -129,7 +137,9 @@ def pipeline_heldout(
     return df_result
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def _get_kfold(model_type:str, K:int):
     """
     get kfold strategy
@@ -143,7 +153,9 @@ def _get_kfold(model_type:str, K:int):
     
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def build_pipeline(
     model,
     model_type="classification",
@@ -188,7 +200,9 @@ def build_pipeline(
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def pipeline_kfold(x, y, groups, model_type, n_splits=5):
     """
     -classifier baselines -> F1 score tasks 
@@ -270,7 +284,9 @@ def pipeline_kfold(x, y, groups, model_type, n_splits=5):
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def pipeline_repeated_kfold(
     x,
     y,
@@ -366,7 +382,9 @@ def pipeline_repeated_kfold(
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def subject_level_classification_metrics(groups, test_idx, y_test, y_pred, average='macro'):
     """
     Compute subject-level metrics by aggregating predictions using majority voting.
@@ -413,7 +431,9 @@ def subject_level_classification_metrics(groups, test_idx, y_test, y_pred, avera
 
     
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def subject_level_regression_metrics(groups, test_idx, y_test, y_pred):
     """
     Compute subject-level regression metrics by averaging predictions per subject.

@@ -14,7 +14,9 @@ warnings.filterwarnings("ignore")
 logger = get_logger(__name__)
 
 
-
+#===========================#
+# Function 
+#===========================#
 def _proc_appstate(df: pd.DataFrame) -> pd.DataFrame:
     """
     Xử lý đặc thù cho stream APPSTATE:
@@ -39,6 +41,9 @@ def _proc_appstate(df: pd.DataFrame) -> pd.DataFrame:
     return df_processed
 
 
+#===========================#
+# Function 
+#===========================#
 def _proc_network(df: pd.DataFrame) -> pd.DataFrame:
     """
     Xử lý đặc thù cho stream NETWORK:
@@ -70,14 +75,18 @@ def _proc_network(df: pd.DataFrame) -> pd.DataFrame:
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 FUNC_PROC = {
     'APPSTATE': _proc_appstate,
     'NETWORK': _proc_network,
 }
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def _load_data(
     fn: str,
     subject:str,
@@ -106,7 +115,9 @@ def _load_data(
 
 
 
-##########################
+#===========================#
+# Function 
+#===========================#
 def _process(
     stream: str,
     subject: str,
@@ -135,7 +146,7 @@ def _process(
             # print(f"Data after specific processing for {stream} (shape: {df.shape}):\n", df.head())
 
         ## remove rows if the date is not in available_dates
-        available_dates = get_available_dates(subject, d_path, **kwargs)
+        available_dates = utils_data.get_available_dates(subject, d_path, **kwargs)
         mask = np.isin(
             df.index.get_level_values('timestamp').date,
             available_dates
@@ -157,48 +168,6 @@ def _process(
         return {}
 
 
-
-def get_available_dates(subject, d_path, **kwargs) -> pd.DataFrame:
-    """
-    Additional processing specific to neuraivn dataset.
-    - Drop rows with NaN in 'HRTS', 'APPSTATE' columns
-    """
-    # list_stream_to_filter = ['HRTS', 'APPSTATE']
-    list_stream_to_filter = ['HRTS']
-    available_dates = []
-    if len(list_stream_to_filter) > 1:
-        for stream in list_stream_to_filter:
-            fn, config = utils_data.stream_to_fn(stream, **kwargs)
-            # Load data for each stream
-            df_stream = _load_data(fn, subject, d_path, **kwargs)
-
-            # calculate mean value for each day by aggregating value within the date
-            df_stream_agg = df_stream.groupby(df_stream.index.get_level_values('timestamp').date).mean()
-            # get days that not NaN
-            available_date = pd.unique(df_stream_agg.dropna().index)
-
-            available_dates.append(available_date)
-
-        available_dates_hrts, available_dates_appstate = available_dates
-        available_dates = np.intersect1d(available_dates_hrts, available_dates_appstate)
-        # print(f">>> Available dates in HRTS: {available_dates_hrts}")
-        # print(f">>> Available dates in APPSTATE: {available_dates_appstate}")
-        # print(f">>> Intersected dates: {available_dates}")
-    
-    else:
-        stream = list_stream_to_filter[0]
-        fn, config = utils_data.stream_to_fn(stream, **kwargs)
-        df_stream = _load_data(fn, subject, d_path, **kwargs)
-
-
-        # calculate mean value for each day by aggregating value within the date
-        df_stream_agg = df_stream.groupby(df_stream.index.get_level_values('timestamp').date).mean()
-        # get days that not NaN
-        available_dates = pd.unique(df_stream_agg.dropna().index)
-
-    logger.info(f">>> [{subject}] Available dates in {stream}: {available_dates}")
-
-    return available_dates
 
 
 
