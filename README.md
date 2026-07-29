@@ -1,206 +1,53 @@
-# Neurai-VN Benchmark
+# Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification
 
-Benchmarking machine learning models on the Neurai-VN dataset.
+[![Paper](https://img.shields.io/badge/Paper-arXiv%202026-red?logo=arxiv)](https://arxiv.org/abs/2607.25232) 
+[![Code](https://img.shields.io/badge/Code-GitHub-black?logo=github)](https://github.com/neurai-vn/Neurai-VN-benchmark)
+[![Data](https://img.shields.io/badge/Data-Zenodo-blue?logo=zenodo)](https://zenodo.org/records/18976769)
 
-This repository provides the preprocessing pipeline, handcrafted feature extraction, subject-level data splitting, and baseline machine learning benchmarks for the Neurai-VN dataset.
+Digital phenotyping (DP) using smartphones and wearable devices has shown considerable potential for mental health monitoring. However, progress remains difficult to evaluate due to heterogeneous datasets, inconsistent preprocessing pipelines. In this study, we present a reproducible benchmark built upon the Neurai-VN dataset, a high-resolution, multimodal dataset comprising passive sensing and active assessment from wearable and smartphone devices, collected from 100 Vietnamese adults over two weeks. The benchmark defines four clinically relevant binary classification tasks evaluated using standardized subject-wise cross-validation. Representative linear, tree-based, and neural baseline models are evaluated across predefined feature configurations. Mean subject-level F1 scores across five cross-validation folds reached 0.71 for Healthy Control vs. Depression and Healthy Control vs. Clinical, while Healthy Control vs. Anxiety and Depression vs. Anxiety achieved 0.69 and 0.56, respectively. These benchmark results provide reproducible baselines for future research on multimodal DP for mental health classification tasks.
+
+---
+
+## Installation
+
+To run the experiments requires **Python 3.10**, please make sure you have [conda](https://docs.conda.io/en/latest/miniconda.html) installed. Then, create a new conda environment and install the required dependencies:
+
+```bash
+conda create -n neurai python=3.10 -y
+conda activate neurai
+pip install -r requirements.txt
+```
+
+## Experimental Setup
+
+The Neurai-VN dataset can be downloaded from [Zenodo](https://zenodo.org/records/18976769). Before running the pipeline, configure the dataset paths in `src/configs/neuraivn.json`. 
+
+To run the experiments, use the following command:
+
+```bash
+# Single subject
+python -m scripts.run_data --db neuraivn --mode feature-original --key <subject_id>
+
+# All subjects
+python -m scripts.run_data --db neuraivn --mode feature-original --key all --use_ray <True/False>
+```
+
+---
+
+## Contact
+For questions or issues, please contact: **Quoc-Cuong Pham** — [24cuong.pq@vinuni.edu.vn](mailto:24cuong.pq@vinuni.edu.vn)
 
 ## Citation
 
 If you use this repository in your research, please cite our paper:
 ```bibtex
-@article{,
-  title   = {Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification},
-  author  = {Quoc-Cuong Pham, Hoang-Thuy-Duong Vu, Thi-Thanh-Huong Ha, Huy-Hieu Pham},
-  journal = {arXiv preprint arXiv:2607.25232},
-  year    = {2026}
+@misc{pham2026neuraivnbenchmarkstandardizedmachine,
+      title={Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification}, 
+      author={Quoc-Cuong Pham and Hoang-Thuy-Duong Vu and Thi-Thanh-Huong Ha and Huy-Hieu Pham},
+      year={2026},
+      eprint={2607.25232},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2607.25232}, 
 }
 ```
-
-Preprint: https://arxiv.org/pdf/2607.25232
-
-## Requirements
-- Python 3.10
-- Install the required packages: 
-
-```bash
-pip install -r requirements.txt
-```
-
-## Configuration
-
-Before running the pipeline, configure the dataset paths in:
-```text
-src/configs/neuraivn.json
-```
-
-| Key | Description |
-|------|-------------|
-| `DIR_RAW` | Path to the Neurai-VN dataset downloaded from the original source. |
-| `DIR_PROCESSED` | Directory for processed outputs (e.g., `sensor_raw/`, `feature_original/`, `splits/`). |
-| `DIR_RESULTS_ML_BASELINE` | Directory for baseline ML benchmark results. |
-
-
-| Key | Description |
-|------|-------------|
-| `DIR_RAW` | Path to the Neurai-VN dataset downloaded from the original source. |
-| `DIR_PROCESSED` | Directory for processed outputs (e.g., `sensor_raw/`, `feature_original/`, `splits/`). |
-| `DIR_RESULTS_ML_BASELINE` | Directory for baseline ML benchmark results. |
-
-
-## 1. Data Status
-
-Check data availability and labels.
-
-```bash
-# Check one raw file of a subject
-python -m scripts.run_data --db neuraivn --mode checkfile --key P0001-activeZoneMinutes.csv
-
-# Check all raw files of a subject
-python -m scripts.run_data --db neuraivn --mode checkfile --key P0001-all
-
-# Check labels
-python -m scripts.run_data --db neuraivn --mode label
-```
-
----
-
-## 2. Data Splitting
-
-Generate subject-level data splits.
-
-**Output**
-
-```text
-assets/neuraivn/splits/
-└── seed_42.json
-```
-
-**Run**
-
-```bash
-python -m scripts.run_data --db neuraivn --mode split --key all
-```
-
----
-
-## 3. Sensor Extraction
-
-Extract raw sensor data for each subject.
-
-**Output**
-
-```text
-assets/neuraivn/sensor_raw/
-├── P0001.pkl
-├── P0002.pkl
-└── ...
-```
-
-**Run**
-
-```bash
-# Single subject
-python -m scripts.run_data --db neuraivn --mode sensor --key P0001
-
-# All subjects
-python -m scripts.run_data --db neuraivn --mode sensor --key all --use_ray True
-```
-
----
-
-## 4. Original Feature Extraction
-
-Extract handcrafted features for baseline ML models.
-
-**Output**
-
-```text
-assets/neuraivn/feature_original/
-├── P0001.pkl
-├── P0002.pkl
-└── ...
-```
-
-**Run**
-
-```bash
-# Single subject
-python -m scripts.run_data --db neuraivn --mode feature-original --key P0001
-
-# All subjects
-python -m scripts.run_data --db neuraivn --mode feature-original --key all --use_ray True
-```
-
-
-
-## 7. Benchmark ML
-### Description
-Run baseline ML models using **5-fold cross-validation**. Results are saved to:
-```text
-results/benchmarkML/baseline_<database>/
-├── <group_feature>-<task>_5foldcv.csv
-├── ...
-```
-
-For example:
-
-```text
-results/benchmarkML/baseline_neuraivn/
-├── Wm-hc-clinical_5foldcv.csv
-├── Wm+Ws-hc-dep_5foldcv.csv
-├── ...
-```
-
-### Tasks
-
-- `hc-dep`
-- `hc-anx`
-- `dep-anx`
-- `hc-clinical`
-
-### Feature Groups
-
-- `Wm`
-- `Ws`
-- `Sd`
-- `P`
-
-**2-group combinations**
-
-- `Wm+Ws`
-- `P+Sd`
-- `Wm+P`
-- `Wm+Sd`
-- `Ws+P`
-- `Ws+Sd`
-
-**3-group combinations**
-
-- `Wm+Ws+Sd`
-- `Wm+P+Sd`
-- `Ws+P+Sd`
-
-**4-group combination**
-
-- `Wm+Ws+P+Sd`
-
-### Usage
-
-```bash
-python -m scripts.run_data \
-    --db neuraivn \
-    --mode benchmarkML-baseline \
-    --pipeline_type kfold \
-    --task hc-clinical \
-    --group_feature Wm
-```
-
-### Arguments
-
-| Argument | Description |
-|----------|-------------|
-| `--db` | Dataset name (e.g., `neuraivn`) |
-| `--mode` | Benchmark mode (`benchmarkML-baseline`) |
-| `--pipeline_type` | Evaluation pipeline (`kfold`) |
-| `--task` | Classification task |
-| `--group_feature` | Feature group to evaluate |
