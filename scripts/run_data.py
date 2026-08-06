@@ -24,7 +24,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 ##########################
 parser = argparse.ArgumentParser()
-parser.add_argument('--db', type=str, default='gashi24', 
+parser.add_argument('--db', type=str, default='neuraivn', 
     help='name of dataset, e.g., "neuraivn"',
 )
 parser.add_argument('--mode', type=str, default='info', 
@@ -56,7 +56,6 @@ args = parser.parse_args()
 ##########################
 CONFIG  = {
     'neuraivn': utils_data.load_json('src/configs/neuraivn.json'),
-    'global': utils_data.load_yaml('src/configs/global.yaml'),
 
 }
 FUNC = {
@@ -84,8 +83,7 @@ def main(args):
     sanity_check(args)
     f_name = f'{args.db}_{args.mode}'
     CF = CONFIG[args.db]
-    CF_GLOBAL = CONFIG['global']
-    list_streams =  CF_GLOBAL["LIST_STREAM_RAW"][args.db]
+    list_streams =  CF["LIST_STREAMS"]
     use_ray = args.use_ray.lower() == 'true' if args.use_ray is not None else False
     verbose = args.verbose.lower() == 'true' if args.verbose is not None else False
 
@@ -188,8 +186,8 @@ def main(args):
             utils_data.split_subjects(
                 df=df_subject,
                 identifier=identifier,
-                test_size=CF_GLOBAL["TEST_SIZE"],
-                seed=CF_GLOBAL["SEED"],
+                test_size=CF["TEST_SIZE"],
+                seed=CF["SEED"],
             )
         )
         print(

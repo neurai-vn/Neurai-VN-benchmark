@@ -1,9 +1,29 @@
 {
     "DB_NAME": "neuraivn",
+    "SEED": 42,
+    "TEST_SIZE": 0.15,
+    "VAL_SIZE_FROM_DEV": 0.15,
     "DIR_RAW": "", 
     "DIR_PROCESSED": "",
     "DIR_RESULTS_ML_BASELINE": "",
     "IDENTIFIER": "public_id",
+    "LIST_STREAM": [
+        "ACC",
+        "GYRO",
+        "BATTERY",
+        "NETWORK",
+        "APPSTATE",
+        "AZMTS",
+        "ATS",
+        "HRTS",
+        "BREATHINGRATE",
+        "HRV",
+        "SPO2",
+        "SKINTEMP",
+        "SLEEP",
+        "DAILYSURVEY",
+        "MOODLOG"
+    ],
     "FILES": {
         "activeZoneMinutes.csv": {
             "info": {
