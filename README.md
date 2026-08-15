@@ -2,9 +2,9 @@
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv%202026-red?logo=arxiv)](https://arxiv.org/abs/2607.25232) 
 [![Code](https://img.shields.io/badge/Code-GitHub-black?logo=github)](https://github.com/neurai-vn/Neurai-VN-benchmark)
-[![Data](https://img.shields.io/badge/Data-Zenodo-blue?logo=zenodo)](https://zenodo.org/records/18976769)
+[![Data](https://img.shields.io/badge/Data-Zenodo-blue?logo=zenodo)](https://zenodo.org/records/21852329)
 
-Digital phenotyping (DP) using smartphones and wearable devices has shown considerable potential for mental health monitoring. However, progress remains difficult to evaluate due to heterogeneous datasets, inconsistent preprocessing pipelines. In this study, we present a reproducible benchmark built upon the Neurai-VN dataset, a high-resolution, multimodal dataset comprising passive sensing and active assessment from wearable and smartphone devices, collected from 100 Vietnamese adults over two weeks. The benchmark defines four clinically relevant binary classification tasks evaluated using standardized subject-wise cross-validation. Representative linear, tree-based, and neural baseline models are evaluated across predefined feature configurations. Mean subject-level F1 scores across five cross-validation folds reached 0.71 for Healthy Control vs. Depression and Healthy Control vs. Clinical, while Healthy Control vs. Anxiety and Depression vs. Anxiety achieved 0.69 and 0.56, respectively. These benchmark results provide reproducible baselines for future research on multimodal DP for mental health classification tasks.
+Digital phenotyping (DP) using smartphones and wearable devices has shown considerable potential for mental health monitoring. However, progress remains difficult to evaluate due to heterogeneous datasets, inconsistent preprocessing pipelines. In this work, we present a reproducible benchmark built upon the Neurai-VN dataset, a multimodal dataset comprising passive sensing and active assessment across multiple temporal scales, from wearable and smartphone devices, collected from 100 Vietnamese adults over two weeks under free-living conditions. We define four binary classification tasks evaluated using standardized subject-wise cross-validation. Representative linear, tree-based, and neural baseline models are evaluated systematically across predefined feature-group configurations. Mean subject-level F1 scores across five cross-validation folds reached 0.71 for Healthy Control vs. Depression and Healthy Control vs. Clinical, while Healthy Control vs. Anxiety and Depression vs. Anxiety achieved 0.69 and 0.56, respectively. These baseline results provide reproducible baselines for future research on multimodal DP for mental health classification tasks. The code to reproduce the benchmark is available at \url{https://github.com/neurai-vn/Neurai-VN-benchmark}.
 
 ---
 
@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ## Experimental Setup
 
-The Neurai-VN dataset can be downloaded from [Zenodo](https://zenodo.org/records/18976769). Before running the pipeline, configure the dataset paths in `src/configs/neuraivn.json`. 
+The Neurai-VN dataset can be downloaded (latest version) from [Zenodo](https://zenodo.org/records/21852329). Before running the pipeline, configure the dataset paths in `src/configs/neuraivn.json`. 
 
 To run the experiments, use the following command:
 
@@ -35,11 +35,10 @@ python -m scripts.run_data --db neuraivn --mode feature-original --key all --use
 ---
 
 ## Contact
-For questions or issues, please contact: **Quoc-Cuong Pham** — [24cuong.pq@vinuni.edu.vn](mailto:24cuong.pq@vinuni.edu.vn)
+For questions, please contact: [24cuong.pq@vinuni.edu.vn](mailto:24cuong.pq@vinuni.edu.vn)
 
 ## Citation
-
-If you use this repository in your research, please cite our paper:
+- If you use this resource, please cite our paper:
 ```bibtex
 @misc{pham2026neuraivnbenchmarkstandardizedmachine,
       title={Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification}, 
